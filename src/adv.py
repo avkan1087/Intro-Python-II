@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,9 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+if __name__ == "__main__":
+    player = Player(room['outside'])
+    assert player.current_room.name == "Outside Cave Entrance"
 
 # Write a loop that:
 #
@@ -49,3 +53,30 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+while True:
+    print("Your current location:", player.current_room.name)
+    print(player.current_room.desc)
+    move = input(
+        'Where do you want to go? N, S, E, W, or Q to quit the game > ').lower().strip()
+    if move == 'q':
+        break
+    elif player.current_room.name == room["outside"].name and move == 'n':
+        player.current_room = room['outside'].n_to
+    elif player.current_room.name == room["foyer"].name and move == 'n':
+        player.current_room = room['foyer'].n_to
+    elif player.current_room.name == room["foyer"].name and move == 's':
+        player.current_room = room['foyer'].s_to
+    elif player.current_room.name == room["foyer"].name and move == 'e':
+        player.current_room = room['foyer'].e_to
+    elif player.current_room.name == room["overlook"].name and move == 's':
+        player.current_room = room['overlook'].s_to
+    elif player.current_room.name == room["narrow"].name and move == 'n':
+        player.current_room = room['narrow'].n_to
+    elif player.current_room.name == room["narrow"].name and move == 's':
+        player.current_room = room['narrow'].s_to
+    elif player.current_room.name == room["narrow"].name and move == 'w':
+        player.current_room = room['narrow'].w_to
+    else:
+        print("Incorrect input or you cannot you go there.")
+        continue
